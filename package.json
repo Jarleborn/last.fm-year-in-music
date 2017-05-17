@@ -4,11 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "backpack"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "backpack-core": "^0.3.0",
+    "body-parser": "^1.17.1",
     "express": "^4.14.0",
     "materialize-css": "^0.97.7"
   }
