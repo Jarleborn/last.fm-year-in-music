@@ -12,6 +12,7 @@
   "dependencies": {
     "backpack-core": "^0.3.0",
     "body-parser": "^1.17.1",
+    "cors": "^2.8.3",
     "express": "^4.14.0",
     "materialize-css": "^0.97.7",
     "node-fetch": "^1.6.3"

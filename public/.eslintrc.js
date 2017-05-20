@@ -24,6 +24,9 @@ module.exports = {
   },
   // add your custom rules here
   'rules': {
+    'semi':0,
+    "arrow-body-style": ["error", "always"],
+    'prefer-template':0,
     // don't require .vue extension when importing
     'import/extensions': ['error', 'always', {
       'js': 'never',
