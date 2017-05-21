@@ -8,8 +8,7 @@
         <li v-for="artist in body">
           <h2>{{artist.name}}</h2>
           <p>{{artist.playcount}}</p>
-          <img :src="getImageTad(artist.mbid, artist.name)" />
-          <p>{{getImageTad(artist.mbid, artist.name)}}</p>
+          <img :src="artist.pic" />
         </li>
       </ol>
 
@@ -52,10 +51,13 @@ export default {
       .then((res) => {
         // console.log(res);
         for (let i = 0; i < 5; i += 1) {
-          that.body.push({
-            name: res.artist[i].name,
-            playcount: res.artist[i].playcount,
-            pic: that.getImageTad(res.artist[i].mbid, res.artist[i].name),
+          that.getImageTad(res.artist[i].mbid, res.artist[i].name)
+          .then((link) => {
+            that.body.push({
+              name: res.artist[i].name,
+              playcount: res.artist[i].playcount,
+              pic: link,
+            })
           })
         }
       })
@@ -73,17 +75,23 @@ export default {
       }
     },
     getImageTad(mbid, artistName) {
-      console.log(artistName);
-      let url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=' + mbid + '&api_key=42945819213669931e01a3d4732c68f2&format=json'
-      if (!artistName.includes('&')) {
-        url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artistName + '&api_key=42945819213669931e01a3d4732c68f2&format=json'
-      }
-      fetch(url, {
-        method: 'get',
-      }).then((response) => {
-        return response.json()
-      }).then((data) => {
-        return data.artist.image[1]['#text']
+      return new Promise((resolve, reject) => {
+        console.log(artistName);
+        let url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&mbid=' + mbid + '&api_key=42945819213669931e01a3d4732c68f2&format=json'
+        if (!artistName.includes('&')) {
+          url = 'http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=' + artistName + '&api_key=42945819213669931e01a3d4732c68f2&format=json'
+        }
+        fetch(url, {
+          method: 'get',
+        }).then((response) => {
+          return response.json()
+        }).then((data) => {
+          if (!data.artist) {
+            reject('#')
+          }
+          console.log(data.artist.image[2]['#text']);
+          resolve(data.artist.image[2]['#text'])
+        })
       })
     },
   },
