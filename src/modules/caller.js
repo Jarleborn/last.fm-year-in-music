@@ -10,7 +10,7 @@ const fetch = require('node-fetch')
         if (!body) {
           reject('eeeeeeeeeeeeeeeeeeeeeeeeeeerrrrrrrrrrrrrrror')
         }
-          // console.log(body.weeklyartistchart);
+          console.log(body.weeklyartistchart.artist);
           resolve(body)
       });
     });
